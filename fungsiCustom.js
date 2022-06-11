@@ -28,11 +28,67 @@ let modifyFile3 = (val) => {
 // 5. push data to result[]
 // 6. call fnCallback
 
+const getExpectedWord = (word) => {
+      const splitteWord = words.split(' ')
+      
+      if (splitteWord?.length >= 1) {
+            return splitteWord[1]
+      }
+} 
 
-
+const processData = (dataset) => {
+      const data = JSON.parse(dataset)
+      let expectedString = ''
+      
+      // case object
+      if (data?.message !== undefined) {
+            expectedString = data?.message
+      }
+      
+      //case array
+      if (data?.length) {
+            data?.forEach(item => {
+                  
+                  if (item?.message !== undefined) {
+                        expectedString = item?.message
+                  }
+                  
+                  if (item?.data?.message !== undefined) {
+                        expectedString = item?.data?.message
+                  }
+             })
+      }
+      
+    return getExpectedWord(expectedString)
+}
 
 const bacaData = null;
-
+const bacaData = (fnCallback) => {
+      const fileList = [file1, file2, file3]
+      const result = []
+      fileList.foreach(item => {
+         const processItem = new Promise(resolve, reject) => {
+            fs.readFile(item, (error, data) => {
+                  // error state
+                  if (error) {
+                        reject(error)
+                        return
+                  }
+                  // success state
+                  const getProcessedItem = processData(data)
+                  resolve(getProcessedItem)
+            })
+         })
+         result.push(processItem)
+      })
+      
+      // call result in callback
+      Promise.all(result).then(value => {
+            fnCallback(null, values)
+      }).catch(error => {
+            fnCallback(error, null)
+      });
+}
 
 // ! JANGAN DIMODIFIKASI
 module.exports = {
