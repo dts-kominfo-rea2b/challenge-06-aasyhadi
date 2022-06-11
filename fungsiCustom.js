@@ -1,5 +1,6 @@
 // TODO: import module bila dibutuhkan di sini
-
+const fs = require('fs');
+      
 // ! JANGAN DIMODIFIKASI
 let file1 = "./data1.json";
 let file2 = "./data2.json";
@@ -18,7 +19,20 @@ let modifyFile3 = (val) => {
 
 // TODO: Kerjakan bacaData
 // gunakan variabel file1, file2, dan file3
+
+// 1. store json files in array 'filelist'
+// 2. loop through fileList and do: 
+// fs.readfile wrapped in Promised
+// 3. if error fount, store the Error type
+// 4. otherwise, process and return data in processData(dataset)
+// 5. push data to result[]
+// 6. call fnCallback
+
+
+
+
 const bacaData = null;
+
 
 // ! JANGAN DIMODIFIKASI
 module.exports = {
